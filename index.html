@@ -29,7 +29,9 @@
 						</ul>
 						<form class="navbar-form navbar-left">
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Search">
+								<input type="text" class="form-control" placeholder="Search for a mushroom . . ." ng-model="searchText">
+								<div ng-repeat="mushroom in mushrooms | filter: searchText">
+								</div>
 							</div>
 						</form>
 					</div><!-- /.navbar-collapse -->
@@ -38,49 +40,35 @@
 			<div>
 				<div class="row">
 					<div class="col-xs-6 col-xs-offset-3">
-						<button class="col-xs-6 btn btn-danger" ng-click="poisonous()">Poisonous</button>
-						<button class="col-xs-6 btn btn-success" ng-click="nonPoisonous()">Non-poisonous</button>
+						<button class="col-xs-6 btn btn-danger" ng-click="poisonous()" ng-model="searchText">Poisonous</button>
+						<button class="col-xs-6 btn btn-success" ng-click="nonPoisonous()" ng-model="searchText">Non-poisonous</button>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-8 col-xs-offset-2">
 						<div ng-show="!showListView">
 							<h3>Poisonous Mushrooms</h3>
-							<form>
-							<div class="form-group">
-								<label>Task Description</label>
-								<input type="text" class="form-control" placeholder="Some important task" ng-model="newTask.task"/>
+							<div ng-repeat="mushroom in mushrooms | filter:{edible:false} | filter: searchText">
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<div class="col-xs-1"></div>
+										<div class="col-xs-1">{{mushroom.name}}</div>   
+										<div class="col-xs-7 col-xs-offset-2">{{mushroom.description}}</div>
+									</div>
+								</div>
 							</div>
-							<div class="form-group">
-								<label>Assigned To</label>
-								<input type="text" class="form-control" placeholder="Zoe" ng-model="	newTask.assignedTo"/>
-							</div>
-							<button class="btn btn-default" ng-click="addNewItem()">Submit</button>
-							</form>
 						</div>
 						<div ng-show="showListView">
-								<input type="text" placeholder="Search for ..." ng-model="searchText">
-							<h3>Todo</h3>
-							<div ng-repeat="item in items | filter:{isCompleted:false} | filter: searchText" >
+							<h3>Edible Mushrooms</h3>
+							<div ng-repeat="mushroom in mushrooms | filter:{edible:true} | filter: searchText">
 								<div class="panel panel-default">
 									<div class="panel-body">
-										<div class="col-xs-1"><input type="checkbox" name=""ng-checked="item.isCompleted"/></div>
-										<div class="col-xs-7">{{item.task}}</div>
-										<div class="col-xs-1 col-xs-offset-2">{{item.assignedTo}}</div>   <div class="col-xs-1"><button class="btn btn-danger fa fa-trash-o"></button></div>
+										<div class="col-xs-1"></div>
+										<div class="col-xs-1">{{mushroom.name}}</div>   
+										<div class="col-xs-7 col-xs-offset-2">{{mushroom.description}}</div>
 									</div>
 								</div>
 							</div>
-							<h3>Edible Mushrooms</h3>
-							<div ng-repeat="item in items | filter:{isCompleted:true}">
-								<div class="panel panel-default">
-									<div class="panel-body">
-										<div class="col-xs-1"><input type="checkbox" name="" ng-checked="item.isCompleted"/></div>
-										<div class="col-xs-7">{{item.task}}</div>
-										<div class="col-xs-1  col-xs-offset-2">{{item.assignedTo}}</div>            
-										<div class="col-xs-1"><button class="btn btn-danger fa fa-trash-o"></button></div>
-									</div>
-								</div>
-							</div>					
 						</div>
 					</div>
 				</div>

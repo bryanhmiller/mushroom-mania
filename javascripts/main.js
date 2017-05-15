@@ -4,8 +4,17 @@ app.run((FIREBASE_CONFIG) => {
 
 app.controller("PickerCtrl", ($http, $q, $scope, FIREBASE_CONFIG) => {
 
-	
-	$scope.navItems = [{name : "Logout"}, {name : "All Items"}, {name : "New Item"}];
+	$scope.showListView = true;
+	$scope.mushrooms = [];
+
+	$scope.nonPoisonous = () => {
+		$scope.showListView = true;
+	};
+
+	$scope.poisonous = () => {
+		$scope.showListView = false;
+	};
+ 	
 
 	let getMushroomList = () => {
 		let mushroomz = [];
@@ -29,8 +38,6 @@ app.controller("PickerCtrl", ($http, $q, $scope, FIREBASE_CONFIG) => {
 		getMushroomList()
 		.then((mushroomz) => {
 			$scope.mushrooms = mushroomz;
-			console.log("mushroomz", mushroomz);
-			console.log("$scope.mushrooms", $scope.mushrooms);
 		}).catch((error) => {
 			console.log("get Error", error);
 		});
